@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coin Flip Game</title>
+</head>
+<body>
+    <button id="tealButton">Teal</button>
+    <button id="headButton">Head</button>
+    <p id="result"></p>
+    <p id="point">My Point: <span id="pointValue">0</span></p>
+    <script>
+        let points = localStorage.getItem('points') ? parseInt(localStorage.getItem('points')) : 0;
+        document.getElementById('pointValue').textContent = points;
+
+        document.getElementById('tealButton').addEventListener('click', function() {
+            flipCoin('Teal');
+        });
+
+        document.getElementById('headButton').addEventListener('click', function() {
+            flipCoin('Head');
+        });
+
+        function flipCoin(userChoice) {
+            let randomNumber = Math.random();
+            let randomNumberOneDecimal = Math.floor(randomNumber * 10) / 10;  
+
+            let isHead = (randomNumberOneDecimal >= 0.0 && randomNumberOneDecimal <= 0.5);
+            let isTail = (randomNumberOneDecimal >= 0.6 && randomNumberOneDecimal <= 0.9);
+
+            let resultText = `Random number: ${randomNumberOneDecimal.toFixed(1)}. `;
+
+            if (isHead && userChoice === 'Head') {
+                resultText += 'Head! You win!';
+                points++;
+            } else if (isTail && userChoice === 'Teal') {
+                resultText += 'Tail! You win!';
+                points++;
+            } else if (isHead || isTail) {
+                resultText += 'You lose!';
+            } else {
+                resultText += 'Number out of range. Please try again.';
+            }
+
+            localStorage.setItem('points', points);
+            document.getElementById('result').textContent = resultText;
+            document.getElementById('pointValue').textContent = points;
+        }
+    </script>
+</body>
+</html>
