@@ -37,10 +37,8 @@
             } else if (isTail && userChoice === 'Teal') {
                 resultText += 'Tail! You win!';
                 points++;
-            } else if (isHead || isTail) {
+            }  else {
                 resultText += 'You lose!';
-            } else {
-                resultText += 'Number out of range. Please try again.';
             }
 
             localStorage.setItem('points', points);
